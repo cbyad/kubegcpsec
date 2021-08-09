@@ -7,11 +7,19 @@ We can store our secrets in **GCP secret manager**. But in order to store secret
 - kubeseal
 
 # Features
-- Generate from local file k8s secrets manifests used by kubeseal to generate sealed secrets [DONE]
+- Generate from local file k8s secrets manifests used by kubeseal to generate sealed secrets
 - Generate from GCP secret manager k8s secrets manifests used by kubeseal to generate sealed secrets [TODO]
 - Generate sealed secrets with kubeseal [TODO]
 
-# Usage (TODO)
-```
-kubegcpsec --in toto.json --name toto --namespace toto-namespace --out toto-secrets.yaml
+# Usage
+
+```bash
+kubegcpsec [options]
+Options:
+  -v, --version                    output the version number
+  -i, --input <input-file>         input file with your .json key-value pairs
+  -n, --name <secret-name>         secret name
+  -N, --namespace <app-namespace>  your app namespace
+  -o, --output <output-file>       generated k8s secrets manifest .yaml
+  -h, --help                       display help for command
 ```
