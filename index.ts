@@ -1,5 +1,11 @@
-import yaml from 'yaml'
+#!/usr/bin/env node
+
+import chalk from 'chalk'
+import clear from 'clear'
+import { Command } from 'commander'
+import figlet from 'figlet'
 import * as fs from 'fs'
+import yaml from 'yaml'
 
 const getSecret = (name: string, namespace: string, data: { [key: string]: string }) => yaml.stringify({
     apiVersion: "v1",
@@ -26,11 +32,11 @@ const zipWith = <A, B, C>(as: readonly A[], bs: readonly B[], f: (a: A, b: B) =>
     return cs
 }
 
-const tag = "[kubegcpsec] --- "
-const log = (msg: string) => console.log(`${tag} ${msg}`)
-const logError = (msg: string) => console.error(`${tag} - ${msg}`)
+const kubegcpsec = (name: string, namespace: string, input: string, output: string) => {
+    const tag = "[kubegcpsec] --- "
+    const log = (msg: string) => console.log(`${tag} ${msg}`)
+    const logError = (msg: string) => console.error(`${tag} - ${msg}`)
 
-const kubegcpsec = (name: string, namespace: string, input: string, output?: string) => {
     log('start generate')
     try {
         const testData = fs.readFileSync(input)
@@ -38,14 +44,36 @@ const kubegcpsec = (name: string, namespace: string, input: string, output?: str
         const encoded = encodeData(JSON.parse(testData.toString()))
         log(`all secrets has been encoded into base64`)
         const secret = getSecret(name, namespace, encoded)
-        fs.writeFileSync(output || 'secrets.yaml', secret)
-        log(`k8s secrets manifests succesfully built under ${output || 'secrets.yaml'}`)
+        fs.writeFileSync(output, secret)
+        log(`k8s secrets manifests succesfully built under ${output}`)
     } catch (error) {
         logError(String(error))
     }
 }
 
 const main = () => {
-    kubegcpsec("toto", "toto-namespace", "/Users/mac/Desktop/WT/dev/secret-generator/secret.json", "")
+    // clear()
+    console.log(chalk.blue(figlet.textSync('--- kubegcpsec ---', { horizontalLayout: 'default' })))
+    const program = new Command()
+    program
+        .version('0.0.1', '-v, --version')
+        .description("A tool to generate k8s secrets manifests")
+        .option('-i, --input <input-file>', 'input file with your .json key-value pairs')
+        .option('-n, --name <secret-name>', 'secret name')
+        .option('-N, --namespace <app-namespace>', 'your app namespace')
+        .option('-o, --output <output-file>', 'generated k8s secrets manifest .yaml')
+        .parse(process.argv)
+
+    if (process.argv.slice(2).length == 0) { program.outputHelp(); return }
+
+    const options = program.opts()
+    const input = options.input, name = options.name, namespace = options.namespace
+    if (input && name && namespace) {
+        const output = options.output || 'secrets.yaml'
+        kubegcpsec(name, namespace, input, output)
+        return
+    }
+    program.outputHelp()
 }
+
 main()
