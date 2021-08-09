@@ -1,0 +1,26 @@
+{
+  "name": "secret-generator",
+  "version": "0.0.1",
+  "description": "__TODO__",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "tsc && node dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "----TODO---"
+  },
+  "keywords": [
+    "secret"
+  ],
+  "author": "yannick (cbyad)",
+  "license": "ISC",
+  "dependencies": {
+    "typescript": "^4.0.3",
+    "yaml": "^1.10.2"
+  },
+  "devDependencies": {
+    "@types/node": "^16.4.13"
+  }
+}
