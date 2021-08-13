@@ -28,3 +28,15 @@ Options:
 Download project and do :
 1. `npm i && npm run build && npm link`
 2. Now you can use `kubegcpsec` in your any terminal session
+
+# Input Example to supply
+```json
+{
+    "SQL_PASSWORD": "password",
+    "SQL_USERNAME": "azerty",
+    "SQL_TEST": "azeta",
+    "SQL_TEST_1": "qwerty",
+    "SQL_TEST_2": "toto",
+    "SQL_TEST_3": "qwerty"
+}
+```

@@ -62,9 +62,10 @@ const main = () => {
     if (process.argv.slice(2).length == 0) { program.outputHelp(); return }
 
     const options = program.opts()
-    const filename = options.input, name = options.name, namespace = options.namespace
+    const { filename, name, namespace } = options
     if (filename && name && namespace) {
         const output = options.output || 'secrets.yaml'
+        console.log({ ...options, output })
         kubegcpsec(name, namespace, filename, output)
         return
     }
