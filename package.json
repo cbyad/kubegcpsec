@@ -1,15 +1,18 @@
 {
-  "name": "secret-generator",
+  "name": "kubegcpsec",
   "version": "0.0.1",
-  "description": "__TODO__",
-  "main": "index.js",
+  "description": "A tool to generate k8s secrets manifests",
+  "main": "./dist/index.js",
+  "bin": {
+    "kubegcpsec": "./dist/index.js"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "start": "tsc && node dist/index.js"
   },
   "repository": {
     "type": "git",
-    "url": "----TODO---"
+    "url": "https://github.com/cbyad/kubegcpsec.git"
   },
   "keywords": [
     "secret"
@@ -17,10 +20,11 @@
   "author": "yannick (cbyad)",
   "license": "ISC",
   "dependencies": {
-    "typescript": "^4.0.3",
+    "commander": "^8.1.0",
     "yaml": "^1.10.2"
   },
   "devDependencies": {
-    "@types/node": "^16.4.13"
+    "@types/node": "^16.4.13",
+    "typescript": "^4.0.3"
   }
 }
