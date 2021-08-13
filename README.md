@@ -17,9 +17,14 @@ We can store our secrets in **GCP secret manager**. But in order to store secret
 kubegcpsec [options]
 Options:
   -v, --version                    output the version number
-  -i, --input <input-file>         input file with your .json key-value pairs
+  -f, --filename <input-file>         input file with your .json key-value pairs
   -n, --name <secret-name>         secret name
   -N, --namespace <app-namespace>  your app namespace
   -o, --output <output-file>       generated k8s secrets manifest .yaml
   -h, --help                       display help for command
 ```
+
+# First installation (local)
+Download project and do :
+1. `npm i && npm run build && npm link`
+2. Now you can use `kubegcpsec` in your any terminal session

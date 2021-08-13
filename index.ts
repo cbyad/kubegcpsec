@@ -1,9 +1,6 @@
 #!/usr/bin/env node
 
-import chalk from 'chalk'
-import clear from 'clear'
 import { Command } from 'commander'
-import figlet from 'figlet'
 import * as fs from 'fs'
 import yaml from 'yaml'
 
@@ -52,13 +49,11 @@ const kubegcpsec = (name: string, namespace: string, input: string, output: stri
 }
 
 const main = () => {
-    // clear()
-    console.log(chalk.blue(figlet.textSync('--- kubegcpsec ---', { horizontalLayout: 'default' })))
     const program = new Command()
     program
         .version('0.0.1', '-v, --version')
         .description("A tool to generate k8s secrets manifests")
-        .option('-i, --input <input-file>', 'input file with your .json key-value pairs')
+        .option('-f, --filename <input-file>', 'input file with your .json key-value pairs')
         .option('-n, --name <secret-name>', 'secret name')
         .option('-N, --namespace <app-namespace>', 'your app namespace')
         .option('-o, --output <output-file>', 'generated k8s secrets manifest .yaml')
@@ -67,10 +62,10 @@ const main = () => {
     if (process.argv.slice(2).length == 0) { program.outputHelp(); return }
 
     const options = program.opts()
-    const input = options.input, name = options.name, namespace = options.namespace
-    if (input && name && namespace) {
+    const filename = options.input, name = options.name, namespace = options.namespace
+    if (filename && name && namespace) {
         const output = options.output || 'secrets.yaml'
-        kubegcpsec(name, namespace, input, output)
+        kubegcpsec(name, namespace, filename, output)
         return
     }
     program.outputHelp()
